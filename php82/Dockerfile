@@ -114,8 +114,6 @@ RUN pecl install xdebug-3.2.2 \
     && docker-php-ext-enable xdebug
 
 COPY 10-xdebug.ini /usr/local/etc/php/conf.d/10-xdebug.ini
-USER $CURRENT_UID
-
 COPY ssh_config /etc/ssh/ssh_config
 
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
