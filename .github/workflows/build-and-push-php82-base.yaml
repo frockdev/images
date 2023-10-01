@@ -10,8 +10,9 @@
 name: Publish PHP82 Base Docker image
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - "v*"
 
 jobs:
   push_to_registry:
