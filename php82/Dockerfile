@@ -89,10 +89,10 @@ RUN echo 'alias artisan="php /var/www/artisan"' >> /etc/profile
 
 ARG CURRENT_UID=1000
 ARG CURRENT_GID=1000
-RUN addgroup --gid $CURRENT_GID professional2 || true
-RUN adduser --shell /bin/bash --disabled-login --gid $CURRENT_GID --uid $CURRENT_UID professional2
+RUN addgroup --gid $CURRENT_GID frock || true
+RUN adduser --shell /bin/bash --disabled-login --gid $CURRENT_GID --uid $CURRENT_UID frock
 
-RUN mkdir -p /home/professional2/.config/psysh && chown -R professional2 /home/professional2/
+RUN mkdir -p /home/frock/.config/psysh && chown -R frock /home/frock/
 RUN chmod -R 777 /var/www
 
 RUN apt-get update && apt-get install -y bc
@@ -118,7 +118,7 @@ COPY ssh_config /etc/ssh/ssh_config
 
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt-get install -y nodejs gcc g++ make
-
+RUN mkdir -p /.npm && chmod -R 777 /.npm && chown -R frock /.npm
 USER $CURRENT_UID
 
 ENTRYPOINT ["rr"]
