@@ -38,6 +38,8 @@ jobs:
         uses: int128/kaniko-action@v1
         with:
           push: true
+          context: php82
+          file: ./php82/Dockerfile
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache: true
