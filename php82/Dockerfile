@@ -68,8 +68,8 @@ RUN docker-php-ext-configure intl \
     && docker-php-ext-install mysqli \
     && docker-php-ext-install pgsql
 
-#RUN pecl update-channels && pecl install grpc
-#RUN docker-php-ext-enable grpc
+RUN pecl update-channels && pecl install grpc
+RUN docker-php-ext-enable grpc
 
 RUN pecl update-channels && pecl install -o -f redis pcov apcu \
     &&  rm -rf /tmp/pear \
@@ -80,7 +80,7 @@ ENV PATH $PATH:/var/www/vendor/bin:/var/www/bin
 
 RUN php --ini
 
-COPY images/php82/php.ini /usr/local/etc/php/php.ini
+COPY php.ini /usr/local/etc/php/php.ini
 
 WORKDIR /var/www
 
@@ -113,10 +113,10 @@ RUN chmod +x /usr/local/bin/composer
 RUN pecl install xdebug-3.2.2 \
     && docker-php-ext-enable xdebug
 
-COPY images/php82/10-xdebug.ini /usr/local/etc/php/conf.d/10-xdebug.ini
+COPY 10-xdebug.ini /usr/local/etc/php/conf.d/10-xdebug.ini
 USER $CURRENT_UID
 
-COPY images/php82/ssh_config /etc/ssh/ssh_config
+COPY ssh_config /etc/ssh/ssh_config
 
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
 RUN apt-get install -y nodejs
@@ -125,89 +125,3 @@ USER $CURRENT_UID
 
 ENTRYPOINT ["rr"]
 CMD [ "serve", "-d", "-c", "/var/.rr.yaml", "--debug", "-w", "/var/www" ]
-
-
-#FROM ${LOCAL} as local-xdebug
-
-#FROM local as builder
-#ARG COMPOSER_KEY
-#USER 1000
-#RUN echo "{" > /var/www/auth.json
-#RUN echo '"gitlab-token": {' >> /var/www/auth.json
-#RUN echo '"gitlab.com": "'${COMPOSER_KEY}'"'>> /var/www/auth.json
-#RUN echo "}" >> /var/www/auth.json
-#RUN echo "}" >> /var/www/auth.json
-#
-#COPY --chown=1000:1000 app/bin /var/www/bin
-#COPY --chown=1000:1000 app/config /var/www/config
-#COPY --chown=1000:1000 app/migrations /var/www/migrations
-#COPY --chown=1000:1000 app/phpGenerated /var/www/phpGenerated
-#COPY --chown=1000:1000 app/public /var/www/public
-#COPY --chown=1000:1000 app/src /var/www/src
-#COPY --chown=1000:1000 app/templates /var/www/templates
-#COPY --chown=1000:1000 app/translations /var/www/translations
-#COPY --chown=1000:1000 app/proto /var/www/proto
-#
-#COPY --chown=1000:1000 app/.env /var/www/.env
-#COPY --chown=1000:1000 app/composer.json /var/www/composer.json
-##убрать composer lock впоследствии
-#COPY --chown=1000:1000 app/composer.lock /var/www/composer.lock
-#COPY --chown=1000:1000 infra/Makefiles/10-Makefile-symfony /var/www/infra/Makefiles/10-Makefile-symfony
-#COPY --chown=1000:1000 Makefile /var/www/Makefile
-#COPY --chown=1000:1000 app/symfony.lock /var/www/symfony.lock
-#RUN cd /var/www && composer install
-
-#RUN cd /var/www && bin/console cache:clear
-
-
-#COPY --chown=1000:1000 /var/www/var /var/www/var #not needed because we will build container below
-#RUN cache clear to build container
-
-#FROM builder as checks
-#USER 1000
-#
-#COPY --chown=1000:1000 app/.env.test /var/www/.env.test
-#COPY --chown=1000:1000 app/phpunit.xml.dist /var/www/phpunit.xml.dist
-#COPY --chown=1000:1000 app/.php-cs-fixer.dist.php /var/www/.php-cs-fixer.dist.php
-#COPY --chown=1000:1000 app/tests /var/www/tests
-#
-#RUN rm -rf /var/www/vendor
-#RUN cd /var/www && composer install
-#RUN rm -rf /var/www/auth.json
-#RUN cd /var/www && bin/console cache:clear
-
-#FROM ${BASE} as application
-#
-#COPY --chown=1000:1000 --from=builder /var/www/bin /var/www/bin
-#COPY --chown=1000:1000 --from=builder /var/www/config /var/www/config
-#COPY --chown=1000:1000 --from=builder /var/www/migrations /var/www/migrations
-#COPY --chown=1000:1000 --from=builder /var/www/phpGenerated /var/www/phpGenerated
-#COPY --chown=1000:1000 --from=builder /var/www/public /var/www/public
-#COPY --chown=1000:1000 --from=builder /var/www/src /var/www/src
-#COPY --chown=1000:1000 --from=builder /var/www/templates /var/www/templates
-#COPY --chown=1000:1000 --from=builder /var/www/translations /var/www/translations
-#
-#COPY --chown=1000:1000 --from=builder /var/www/proto /var/www/proto
-#
-#COPY --chown=1000:1000 --from=builder /var/www/.env /var/www/.env
-#COPY --chown=1000:1000 --from=builder /var/www/composer.json /var/www/composer.json
-#COPY --chown=1000:1000 --from=builder /var/www/composer.lock /var/www/composer.lock
-#COPY --chown=1000:1000 --from=builder /var/www/infra/Makefiles/10-Makefile-symfony /var/www/infra/Makefiles/10-Makefile-symfony
-#
-#COPY --chown=1000:1000 --from=builder /var/www/Makefile /var/www/Makefile
-#COPY --chown=1000:1000 --from=builder /var/www/symfony.lock /var/www/symfony.lock
-#COPY --chown=1000:1000 --from=builder /var/www/vendor /var/www/vendor
-#
-#USER 1000
-## создадим конфиг rr
-#COPY --chown=1000:1000 infra/roadrunner /var/www/roadrunner
-#COPY --chown=1000:1000 app/.rr.custom.yaml /var/www/.rr.custom.yaml
-#RUN yq eval-all '. as $item ireduce ({}; . * $item)' /var/www/roadrunner/* /var/www/.rr.custom.yaml > /var/www/.rr.yaml
-#RUN rm -rf /var/www/roadrunner && rm -rf /var/www/.rr.custom.yaml
-## создадим конфиг rr
-#
-#RUN rm -rf /var/www/auth.json
-#RUN cd /var/www && bin/console cache:clear
-#
-#ENTRYPOINT ["rr"]
-#CMD [ "serve", "-d", "-c", "/var/www/.rr.yaml", "--debug", "-w", "/var/www" ]
