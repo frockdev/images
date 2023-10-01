@@ -118,8 +118,8 @@ USER $CURRENT_UID
 
 COPY ssh_config /etc/ssh/ssh_config
 
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get install -y nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+RUN apt-get install -y nodejs gcc g++ make
 
 USER $CURRENT_UID
 
