@@ -76,7 +76,7 @@ RUN pecl update-channels && pecl install -o -f redis pcov apcu \
     &&  docker-php-ext-enable redis pcov apcu
 
 
-ENV PATH $PATH:/var/www/vendor/bin:/var/www/bin
+ENV PATH $PATH:/var/www/php/vendor/bin
 
 RUN php --ini
 
@@ -84,8 +84,8 @@ COPY php.ini /usr/local/etc/php/php.ini
 
 WORKDIR /var/www
 
-RUN echo PATH="$PATH:/var/www/vendor/bin" >> /etc/profile
-RUN echo 'alias artisan="php /var/www/artisan"' >> /etc/profile
+RUN echo PATH="$PATH:/var/www/php/vendor/bin" >> /etc/profile
+RUN echo 'alias artisan="php /var/www/php/artisan"' >> /etc/profile
 
 ARG CURRENT_UID=1000
 ARG CURRENT_GID=1000
@@ -100,7 +100,7 @@ RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/d
 RUN chmod a+x /usr/local/bin/yq
 
 ENTRYPOINT ["rr"]
-CMD [ "serve", "-d", "-c", "/var/.rr.yaml", "-w", "/var/www" ]
+CMD [ "serve", "-d", "-c", "/var/.rr.yaml", "-w", "/var/www/php" ]
 
 FROM ${BASE} as local
 ARG CURRENT_UID=1000
@@ -122,4 +122,4 @@ RUN mkdir -p /.npm && chmod -R 777 /.npm && chown -R frock /.npm
 USER $CURRENT_UID
 
 ENTRYPOINT ["rr"]
-CMD [ "serve", "-d", "-c", "/var/.rr.yaml", "--debug", "-w", "/var/www" ]
+CMD [ "serve", "-d", "-c", "/var/.rr.yaml", "--debug", "-w", "/var/www/php" ]
