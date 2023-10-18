@@ -23,8 +23,8 @@ RUN apt-get install -y libpng-dev libzip-dev libxml2-dev libpq-dev libcurl4-open
     libcurl4 libonig-dev libssl-dev gnupg gnupg1 gnupg2
 
 
-RUN curl -L https://github.com/roadrunner-server/roadrunner/releases/download/v2023.1.2/roadrunner-2023.1.2-linux-amd64.tar.gz | tar -xz
-RUN mv roadrunner-2023.1.2-linux-amd64/rr /usr/local/bin/rr && chmod +x /usr/local/bin/rr && rm -rf roadrunner-2023.1.2-linux-amd64
+RUN curl -L https://github.com/roadrunner-server/roadrunner/releases/download/v2023.3.1/roadrunner-2023.3.1-linux-amd64.tar.gz | tar -xz
+RUN mv roadrunner-2023.3.1-linux-amd64/rr /usr/local/bin/rr && chmod +x /usr/local/bin/rr && rm -rf roadrunner-2023.3.1-linux-amd64
 
 RUN apt-get install libyaml-dev -y
 RUN  pecl install yaml && echo "extension=yaml.so" > /usr/local/etc/php/conf.d/ext-yaml.ini && docker-php-ext-enable yaml
