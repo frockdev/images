@@ -15,72 +15,66 @@ on:
       - "v*"
 
 jobs:
-  push_to_registry:
-    name: Push Docker image to Docker Hub
+  build:
+    name: Build image
     runs-on: ubuntu-latest
     steps:
-      - name: Check out the repo
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to container registry
+        uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ secrets.DOCKER_PASSWORD }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+      - name: Build and Push Image
+        uses: docker/build-push-action@v3
         with:
-          images: vladitot/php82-base
-
-      - name: Build and push Docker image
-        uses: int128/kaniko-action@v1
-        with:
-          push: true
+          target: base
+          tags:
+            - vladitot/php82-base:latest
+            - vladitot/php82-base:${{ github.ref_name }}
+          platforms: linux/amd64,linux/arm64
           context: php82
           file: ./php82/Dockerfile
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache: true
-          cache-repository: vladitot/php82-base-cache
-
-  push_to_registry_arm:
-    name: Push Docker image to Docker Hub
-    runs-on: buildjet-32vcpu-ubuntu-2204-arm
-    steps:
-      - name: Check out the repo
-        uses: actions/checkout@v4
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
-        with:
-          images: vladitot/php82-base
-
-      - name: Build and push Docker image
-        uses: int128/kaniko-action@v1
-        with:
+          cache-to: type=registry,ref=vladitot/php82-base-cache
+          cache-from: type=registry,ref=vladitot/php82-base-cache
           push: true
-          context: php82
-          file: ./php82/Dockerfile
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache: true
-          cache-repository: vladitot/php82-base-cache
 
-#      - name: Build and push Docker image
-#        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+#jobs:
+#  push_to_registry:
+#    name: Push Docker image to Docker Hub
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Check out the repo
+#        uses: actions/checkout@v4
+#
+#      - name: Log in to Docker Hub
+#        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
 #        with:
+#          username: ${{ secrets.DOCKER_USERNAME }}
+#          password: ${{ secrets.DOCKER_PASSWORD }}
+#
+#      - name: Extract metadata (tags, labels) for Docker
+#        id: meta
+#        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+#        with:
+#          images: vladitot/php82-base
+#
+#      - name: Build and push Docker image
+#        uses: int128/kaniko-action@v1
+#        with:
+#          push: true
 #          context: php82
 #          file: ./php82/Dockerfile
-#          push: true
-#          target: base
 #          tags: ${{ steps.meta.outputs.tags }}
 #          labels: ${{ steps.meta.outputs.labels }}
+#          cache: true
+#          cache-repository: vladitot/php82-base-cache
