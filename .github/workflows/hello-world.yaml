@@ -39,8 +39,8 @@ jobs:
         with:
           tags: vladitot/helloworld:latest,vladitot/helloworld:${{ github.ref_name }}
           platforms: linux/amd64,linux/arm64
-          context: proto-builder
-          file: ./proto-builder/Dockerfile
+          context: hello-world
+          file: ./hello-world/Dockerfile
           cache-to: type=registry,ref=vladitot/helloworld-cache
           cache-from: type=registry,ref=vladitot/helloworld-cache
           push: true
