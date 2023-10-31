@@ -116,8 +116,9 @@ RUN pecl install xdebug-3.2.2 \
 COPY 10-xdebug.ini /usr/local/etc/php/conf.d/10-xdebug.ini
 COPY ssh_config /etc/ssh/ssh_config
 
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
-RUN apt-get install -y nodejs gcc g++ make
+RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash -
+RUN apt-get update && apt-get install -y nodejs
+RUN apt-get update && apt-get install -y gcc g++ make
 RUN mkdir -p /.npm && chmod -R 777 /.npm && chown -R frock /.npm
 USER $CURRENT_UID
 
