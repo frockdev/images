@@ -135,6 +135,7 @@ ARG CURRENT_GID=1000
 RUN addgroup --gid $CURRENT_GID frock
 RUN adduser --shell /bin/bash -G frock -D -u $CURRENT_UID frock
 RUN echo "grpc.enable_fork_support = 1" >> /etc/php82/php.ini
+#RUN echo "RESOLV_CONF=no" >> /etc/udhcpc/udhcpc.conf
 
 FROM base as local
 
