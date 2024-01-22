@@ -1,6 +1,6 @@
 FROM alpine
 
-ARG ARCH
+ARG ARCH=amd64
 
 # Ignore to update versions here
 # docker build --no-cache --build-arg KUBECTL_VERSION=${tag} --build-arg HELM_VERSION=${helm} --build-arg KUSTOMIZE_VERSION=${kustomize_version} -t ${image}:${tag} .
@@ -8,7 +8,7 @@ ARG HELM_VERSION=3.14.0
 ARG KUBECTL_VERSION=1.29.1
 ARG KUSTOMIZE_VERSION=v5.3.0
 ARG KUBESEAL_VERSION=0.25.0
-ARG KREW_VERSION=v0.4.4
+ARG KREW_VERSION=0.4.4
 ARG VALS_VERSION=0.33.0
 ARG KUBECONFORM_VERSION=0.6.4
 
