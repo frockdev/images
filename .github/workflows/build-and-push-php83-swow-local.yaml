@@ -7,7 +7,7 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Publish PHP82 Swow Local Docker image
+name: Publish PHP83 Swow Local Docker image
 
 on:
   push:
@@ -38,10 +38,10 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           target: local
-          tags: vladitot/php82-swow-local:latest,vladitot/php82-swow-local:${{ github.ref_name }}
+          tags: vladitot/php83-swow-local:latest,vladitot/php83-swow-local:${{ github.ref_name }}
           platforms: linux/amd64,linux/arm64
-          context: php82-swow
-          file: ./php82-swow/Dockerfile
-          cache-to: type=registry,ref=vladitot/php82-swow-local-cache
-          cache-from: type=registry,ref=vladitot/php82-swow-local-cache
+          context: php83-swow
+          file: ./php83-swow/Dockerfile
+          cache-to: type=registry,ref=vladitot/php83-swow-local-cache
+          cache-from: type=registry,ref=vladitot/php83-swow-local-cache
           push: true
