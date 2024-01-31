@@ -7,7 +7,7 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Publish PHP82 Hyperf Local Docker image
+name: Publish PHP82 Swow Local Docker image
 
 on:
   push:
