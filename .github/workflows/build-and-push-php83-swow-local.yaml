@@ -38,10 +38,10 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           target: local
-          tags: vladitot/php82-hyperf-swow-local:latest,vladitot/php82-hyperf-swow-local:${{ github.ref_name }}
+          tags: vladitot/php82-swow-local:latest,vladitot/php82-swow-local:${{ github.ref_name }}
           platforms: linux/amd64,linux/arm64
-          context: php82-hyperf-swow
-          file: ./php82-hyperf-swow/Dockerfile
-          cache-to: type=registry,ref=vladitot/php82-hyperf-local-swow-cache
-          cache-from: type=registry,ref=vladitot/php82-hyperf-local-swow-cache
+          context: php82-swow
+          file: ./php82-swow/Dockerfile
+          cache-to: type=registry,ref=vladitot/php82-swow-local-cache
+          cache-from: type=registry,ref=vladitot/php82-swow-local-cache
           push: true
