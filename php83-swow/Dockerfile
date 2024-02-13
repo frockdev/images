@@ -18,6 +18,7 @@ USER frock
 FROM base as local
 USER root
 RUN apk add --no-cache php83-pecl-xdebug
+RUN chmod +x /usr/local/bin/composer
 
 COPY 10-xdebug.ini /etc/php83/conf.d/10-xdebug.ini
 USER frock
