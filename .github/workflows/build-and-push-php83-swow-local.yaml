@@ -38,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           target: local
-          tags: vladitot/php83-swow-local:latest,vladitot/php83-swow-local:${{ github.ref_name }}
+          tags: vladitot/php83-swow-local:latest,vladitot/php83-swow-local:main,vladitot/php83-swow-local:${{ github.ref_name }}
           platforms: linux/amd64,linux/arm64
           context: php83-swow
           file: ./php83-swow/Dockerfile
