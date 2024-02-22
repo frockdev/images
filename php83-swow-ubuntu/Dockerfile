@@ -75,6 +75,7 @@ ARG CURRENT_UID=1000
 ARG CURRENT_GID=1000
 RUN addgroup --gid $CURRENT_GID frock
 RUN adduser --shell /bin/bash --gid 1000 --disabled-login -u $CURRENT_UID frock
+RUN apt-get install -y unzip
 
 USER frock
 
