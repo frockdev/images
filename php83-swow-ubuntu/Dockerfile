@@ -86,7 +86,7 @@ ENV COMPOSER_VERSION=2.7.1
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 RUN wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/${COMPOSER_VERSION}/composer.phar \
-    && chmod u+x /usr/local/bin/composer
+    && chmod +x /usr/local/bin/composer
 
 RUN apt-get install -y php8.3-xdebug
 
