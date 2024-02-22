@@ -38,10 +38,10 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           target: base
-          tags: vladitot/php83-swow-base:latest,vladitot/php83-swow-base:${{ github.ref_name }}
+          tags: vladitot/php83-swow-ubuntu-base:latest,vladitot/php83-swow-ubuntu-base:${{ github.ref_name }}
           platforms: linux/amd64,linux/arm64
-          context: php83-swow
-          file: ./php83-swow/Dockerfile
-          cache-to: type=registry,ref=vladitot/php83-swow-base-cache
-          cache-from: type=registry,ref=vladitot/php83-swow-base-cache
+          context: php83-swow-ubuntu
+          file: ./php83-swow-ubuntu/Dockerfile
+          cache-to: type=registry,ref=vladitot/php83-swow-ubuntu-base-cache
+          cache-from: type=registry,ref=vladitot/php83-swow-ubuntu-base-cache
           push: true
