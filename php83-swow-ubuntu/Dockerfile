@@ -85,6 +85,9 @@ USER root
 ENV COMPOSER_VERSION=2.7.1
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
+RUN mkdir -p /.devspace
+RUN chmod 777 /.devspace
+
 RUN wget -nv -O /usr/local/bin/composer https://github.com/composer/composer/releases/download/${COMPOSER_VERSION}/composer.phar \
     && chmod +x /usr/local/bin/composer
 
