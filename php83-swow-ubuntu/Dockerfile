@@ -11,7 +11,7 @@ RUN apt-get update
 RUN apt-get install -y \
     php8.3
 
-RUN apt-get install -y \
+RUN apt-get update && apt-get install -y \
     php8.3-bcmath \
     php8.3-curl \
     php8.3-dom \
@@ -27,7 +27,8 @@ RUN apt-get install -y \
     php8.3-xmlreader \
     php8.3-xmlwriter \
     php8.3-zip \
-    php8.3-dev
+    php8.3-dev \
+    php8.3-pgsql
 
 RUN apt-get install -y \
     curl \
