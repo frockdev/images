@@ -96,6 +96,8 @@ RUN apt-get install -y php8.3-xdebug
 
 COPY 10-xdebug.ini /etc/php/8.3/cli/conf.d/10-xdebug.ini
 
+ENV PATH="${PATH}:/var/www/php/vendor/bin"
+
 USER frock
 ENTRYPOINT ["php"]
 CMD ["-v"]
