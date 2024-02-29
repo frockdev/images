@@ -41,6 +41,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           context: k8s-devspace
           file: ./k8s-devspace/Dockerfile
+          no-cache-filters: final
           cache-to: type=registry,ref=vladitot/k8s-devspace-cache
           cache-from: type=registry,ref=vladitot/k8s-devspace-cache
           push: true
