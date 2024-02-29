@@ -115,9 +115,11 @@ RUN wget --output-document=/usr/local/bin/devspace https://github.com/loft-sh/de
 
 RUN apk add --update --no-cache bash
 RUN apk add --update --no-cache php82 php82-phar php82-iconv php82-openssl php82-tokenizer php82-fileinfo
+RUN rm -rf /usr/bin/php
 RUN ln -s /usr/bin/php82 /usr/bin/php
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 RUN composer global require frockdev/frock-cli
 ENV PATH="${PATH}:/root/.composer/vendor/bin"
+RUN frock --version
 
 
