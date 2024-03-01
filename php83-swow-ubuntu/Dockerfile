@@ -98,6 +98,8 @@ COPY 10-xdebug.ini /etc/php/8.3/cli/conf.d/10-xdebug.ini
 
 ENV PATH="${PATH}:/var/www/php/vendor/bin"
 
+RUN apt-get install nodejs npm -y
+
 USER frock
 ENTRYPOINT ["php"]
 CMD ["-v"]
