@@ -100,6 +100,8 @@ ENV PATH="${PATH}:/var/www/php/vendor/bin"
 
 RUN apt-get install nodejs npm -y
 
+RUN chown -R 1000:1000 /var/www
+
 USER frock
 ENTRYPOINT ["php"]
 CMD ["-v"]
