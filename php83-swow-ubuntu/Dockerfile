@@ -98,7 +98,16 @@ COPY 10-xdebug.ini /etc/php/8.3/cli/conf.d/10-xdebug.ini
 
 ENV PATH="${PATH}:/var/www/php/vendor/bin"
 
-RUN apt-get install nodejs npm -y
+#RUN apt-get install nodejs npm -y
+
+ENV NODE_VERSION=20.11.1
+RUN apt install -y curl
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+ENV NVM_DIR=/root/.nvm
+RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
+RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
+ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 
 RUN chown -R 1000:1000 /var/www
 
