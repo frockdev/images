@@ -28,7 +28,8 @@ RUN apt-get update && apt-get install -y \
     php8.3-xmlwriter \
     php8.3-zip \
     php8.3-dev \
-    php8.3-pgsql
+    php8.3-pgsql \
+    php8.3-sqlite
 
 RUN apt-get install -y \
     curl \
@@ -68,7 +69,6 @@ RUN set -ex \
     && echo "max_input_vars=PHP_INT_MAX" >> /etc/php/8.3/cli/conf.d/00_default.ini \
     && echo "opcache.enable_cli = 'On'" >> /etc/php/8.3/cli/conf.d/00_opcache.ini \
     && echo "extension=swow.so" > /etc/php/8.3/cli/conf.d/50_swow.ini
-RUN apt-get update && apt-get install -y php8.3-sqlite
 
 FROM pre_base as base
 
