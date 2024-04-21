@@ -68,7 +68,10 @@ RUN set -ex \
     && echo "memory_limit=1G" > /etc/php/8.3/cli/conf.d/00_default.ini \
     && echo "max_input_vars=PHP_INT_MAX" >> /etc/php/8.3/cli/conf.d/00_default.ini \
     && echo "opcache.enable_cli = 'On'" >> /etc/php/8.3/cli/conf.d/00_opcache.ini \
-    && echo "extension=swow.so" > /etc/php/8.3/cli/conf.d/50_swow.ini
+    && echo "extension=swow.so" > /etc/php/8.3/cli/conf.d/50_swow.ini \
+
+RUN pecl install mongodb \
+    &&  echo "extension=mongodb.so" > /etc/php/8.3/cli/conf.d/mongo.ini
 
 FROM pre_base as base
 
