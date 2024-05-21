@@ -28,7 +28,8 @@ RUN apt-get update && apt-get install -y \
     php8.3-xmlwriter \
     php8.3-zip \
     php8.3-dev \
-    php8.3-pgsql
+    php8.3-pgsql \
+    php8.3-sqlite
 
 RUN apt-get install -y \
     curl \
@@ -69,6 +70,8 @@ RUN set -ex \
     && echo "opcache.enable_cli = 'On'" >> /etc/php/8.3/cli/conf.d/00_opcache.ini \
     && echo "extension=swow.so" > /etc/php/8.3/cli/conf.d/50_swow.ini
 
+RUN pecl install mongodb \
+    &&  echo "extension=mongodb.so" > /etc/php/8.3/cli/conf.d/mongo.ini
 
 FROM pre_base as base
 
@@ -98,7 +101,12 @@ COPY 10-xdebug.ini /etc/php/8.3/cli/conf.d/10-xdebug.ini
 
 ENV PATH="${PATH}:/var/www/php/vendor/bin"
 
-RUN apt-get install nodejs npm -y
+#RUN apt-get install nodejs npm -y
+
+RUN curl -sL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
+RUN chmod +x nodesource_setup.sh
+RUN ./nodesource_setup.sh
+RUN apt install nodejs -y
 
 RUN chown -R 1000:1000 /var/www
 
