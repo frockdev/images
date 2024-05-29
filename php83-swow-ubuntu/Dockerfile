@@ -108,7 +108,7 @@ RUN chmod +x nodesource_setup.sh
 RUN ./nodesource_setup.sh
 RUN apt install nodejs -y
 
-RUN apt install awscli
+RUN apt install awscli -y
 
 RUN chown -R 1000:1000 /var/www
 

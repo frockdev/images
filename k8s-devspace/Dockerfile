@@ -121,8 +121,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin -
 FROM base as final
 RUN composer global require frockdev/frock-cli
 
-RUN apk add --no-cache aws-cli
-
 ENV PATH="${PATH}:/root/.composer/vendor/bin"
 RUN frock --version
 
