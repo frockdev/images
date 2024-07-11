@@ -73,6 +73,7 @@ RUN set -ex \
 RUN pecl install mongodb \
     &&  echo "extension=mongodb.so" > /etc/php/8.3/cli/conf.d/mongo.ini
 
+FROM ghcr.io/roadrunner-server/roadrunner:2024.1.5 AS roadrunner
 FROM pre_base as base
 
 ARG CURRENT_UID=1000
@@ -80,6 +81,7 @@ ARG CURRENT_GID=1000
 RUN addgroup --gid $CURRENT_GID frock
 RUN adduser --shell /bin/bash --gid 1000 --disabled-login -u $CURRENT_UID frock
 RUN apt-get install -y unzip
+COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
 USER frock
 
@@ -107,10 +109,6 @@ RUN curl -sL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
 RUN chmod +x nodesource_setup.sh
 RUN ./nodesource_setup.sh
 RUN apt install nodejs -y
-
-#RUN apt install awscli -y
-
-RUN apt-get install -y poppler-utils
 
 RUN chown -R 1000:1000 /var/www
 
