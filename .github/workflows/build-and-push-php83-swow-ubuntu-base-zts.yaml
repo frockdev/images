@@ -7,7 +7,7 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Publish Protoc Docker image
+name: Publish PHP83 Swow Ubuntu Base ZTS Docker image
 
 on:
   push:
@@ -37,10 +37,11 @@ jobs:
       - name: Build and Push Image
         uses: docker/build-push-action@v3
         with:
-          tags: vladitot/protoc:latest,vladitot/protoc:${{ github.ref_name }}
+          target: base
+          tags: vladitot/php83-swow-ubuntu-base-zts:latest,vladitot/php83-swow-ubuntu-base-zts:${{ github.ref_name }}
           platforms: linux/amd64,linux/arm64
-          context: proto-builder
-          file: ./proto-builder/Dockerfile
-          cache-to: type=registry,ref=vladitot/protoc-cache
-          cache-from: type=registry,ref=vladitot/protoc-cache
+          context: php83-swow-ubuntu-zts
+          file: ./php83-swow-ubuntu-zts/Dockerfile
+          cache-to: type=registry,ref=vladitot/php83-swow-ubuntu-base-zts-cache
+          cache-from: type=registry,ref=vladitot/php83-swow-ubuntu-base-zts-cache
           push: true

@@ -7,7 +7,7 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Publish Devspace and k8s image
+name: Publish PHP83 Swow Ubuntu ZTS Local Docker image
 
 on:
   push:
@@ -37,11 +37,11 @@ jobs:
       - name: Build and Push Image
         uses: docker/build-push-action@v3
         with:
-          tags: vladitot/k8s-devspace:latest,vladitot/k8s-devspace:${{ github.ref_name }}
+          target: local
+          tags: vladitot/php83-swow-ubuntu-local-zts:latest,vladitot/php83-swow-ubuntu-local-zts:main,vladitot/php83-swow-ubuntu-local-zts:${{ github.ref_name }}
           platforms: linux/amd64,linux/arm64
-          context: k8s-devspace
-          file: ./k8s-devspace/Dockerfile
-          no-cache-filters: final
-          cache-to: type=registry,ref=vladitot/k8s-devspace-cache
-          cache-from: type=registry,ref=vladitot/k8s-devspace-cache
+          context: php83-swow-ubuntu-zts
+          file: ./php83-swow-ubuntu-zts/Dockerfile
+          cache-to: type=registry,ref=vladitot/php83-swow-ubuntu-local-zts-cache
+          cache-from: type=registry,ref=vladitot/php83-swow-ubuntu-local-zts-cache
           push: true
