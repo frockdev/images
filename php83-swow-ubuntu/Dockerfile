@@ -45,7 +45,7 @@ RUN apt-get install -y \
 
 RUN apt-get -y install build-essential autoconf libtool bison re2c pkg-config
 
-ENV SW_VERSION=v1.5.2
+ENV SW_VERSION=v1.5.3
 # update
 RUN set -ex \
     && apt-get update \
