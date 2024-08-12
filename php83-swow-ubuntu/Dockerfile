@@ -73,7 +73,7 @@ RUN set -ex \
 RUN pecl install mongodb \
     &&  echo "extension=mongodb.so" > /etc/php/8.3/cli/conf.d/mongo.ini
 
-FROM ghcr.io/roadrunner-server/roadrunner:2024.1.5 AS roadrunner
+FROM ghcr.io/roadrunner-server/roadrunner:2024.2.0 AS roadrunner
 FROM pre_base as base
 
 ARG CURRENT_UID=1000
