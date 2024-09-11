@@ -73,6 +73,9 @@ RUN set -ex \
 RUN pecl install mongodb \
     &&  echo "extension=mongodb.so" > /etc/php/8.3/cli/conf.d/mongo.ini
 
+RUN pecl install dio \
+    &&  echo "extension=dio.so" > /etc/php/8.3/cli/conf.d/dio.ini
+
 FROM ghcr.io/roadrunner-server/roadrunner:2024.2.0 AS roadrunner
 FROM pre_base as base
 
