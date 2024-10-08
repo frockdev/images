@@ -40,6 +40,8 @@ FROM pre_base as base
 RUN addgroup -g 1000 frock
 RUN adduser -D -s /bin/bash -G frock -u 1000 frock
 
+ENV PATH="${PATH}:/var/www/php/vendor/bin"
+
 USER 1000
 
 FROM base as local
