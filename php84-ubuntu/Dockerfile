@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install -y \
     php8.4-zip \
     php8.4-dev \
     php8.4-pgsql \
+    php8.4-fpm \
     php8.4-sqlite
 
 RUN apt-get install -y \
