@@ -7,7 +7,7 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Publish PHP84 swoole ubuntu Base Docker image
+name: Publish PHP84 Swoole ubuntu Base Docker image
 
 on:
   push:
