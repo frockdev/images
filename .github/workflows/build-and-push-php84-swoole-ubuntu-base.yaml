@@ -7,7 +7,7 @@
 # To get a newer version, you will need to update the SHA.
 # You can also reference a tag or branch, but the action may change without warning.
 
-name: Publish PHP83 swoole ubuntu Local Docker image
+name: Publish PHP84 swoole ubuntu Base Docker image
 
 on:
   push:
@@ -37,11 +37,11 @@ jobs:
       - name: Build and Push Image
         uses: docker/build-push-action@v3
         with:
-          target: local
-          tags: vladitot/php83-swoole-ubuntu-local:latest,vladitot/php83-swoole-ubuntu-local:main,vladitot/php83-swoole-ubuntu-local:${{ github.ref_name }}
+          target: base
+          tags: vladitot/php84-swoole-ubuntu-base:latest,vladitot/php84-swoole-ubuntu-base:${{ github.ref_name }}
           platforms: linux/amd64,linux/arm64
-          context: php83-swoole-ubuntu
-          file: ./php83-swoole-ubuntu/Dockerfile
-          cache-to: type=registry,ref=vladitot/php83-swoole-ubuntu-local-cache
-          cache-from: type=registry,ref=vladitot/php83-swoole-ubuntu-local-cache
+          context: php84-swoole-ubuntu
+          file: ./php84-swoole-ubuntu/Dockerfile
+          cache-to: type=registry,ref=vladitot/php84-swoole-ubuntu-base-cache
+          cache-from: type=registry,ref=vladitot/php84-swoole-ubuntu-base-cache
           push: true
